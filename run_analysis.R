@@ -1,3 +1,10 @@
+#
+# Cristian Zantedeschi 
+#
+#
+# Coursera getting and cleaning data final project
+#
+
 fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 download.file( fileUrl, "dataset.zip")
 
@@ -57,7 +64,7 @@ tidy <- cbind(Subject = subjects, Activity = activities, merged_limited)
  names(tidyMeans)[-c(1,2)] <- paste0("Mean", names(tidyMeans)[-c(1,2)])
 
   # Write file
-  write.table(tidyMeans, "tidyMeans.csv", row.names = FALSE)
+  write.csv(tidyMeans, "tidyMeans.csv", row.names = FALSE)
 
   # Also return data
   head(tidyMeans)
