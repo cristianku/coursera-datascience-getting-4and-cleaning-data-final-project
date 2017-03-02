@@ -5,11 +5,13 @@
 # Coursera getting and cleaning data final project
 #
 
+# download and unzip the file
 fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 download.file( fileUrl, "dataset.zip")
 
 unzip("dataset.zip")
 
+# read txt files into a memory table
 XTrain <<- read.table("UCI HAR Dataset/train/X_train.txt")
 XTest <<- read.table("UCI HAR Dataset/test/X_test.txt")
 
@@ -55,18 +57,18 @@ subjects <- rbind(subjectTrain, subjectTest)[, 1]
 
 tidy <- cbind(Subject = subjects, Activity = activities, merged_limited)
 
- # Create a second, independent tidy data set with the average of each variable for each activity and each subject.
- library(plyr)
+# Create a second, independent tidy data set with the average of each variable for each activity and each subject.
+library(plyr)
 
- # Column means for all but the subject and activity columns
- limitedColMeans <- function(data) { colMeans(data[,-c(1,2)]) }
- tidyMeans <- ddply(tidy, .(Subject, Activity), limitedColMeans)
- names(tidyMeans)[-c(1,2)] <- paste0("Mean", names(tidyMeans)[-c(1,2)])
+# Column means for all but the subject and activity columns
+limitedColMeans <- function(data) { colMeans(data[,-c(1,2)]) }
+tidyMeans <- ddply(tidy, .(Subject, Activity), limitedColMeans)
+names(tidyMeans)[-c(1,2)] <- paste0("Mean", names(tidyMeans)[-c(1,2)])
 
-  # Write file
-  write.table(tidyMeans, "tidyMeans.txt", row.names = FALSE)
+# Write file
+write.table(tidyMeans, "tidyMeans.txt", row.names = FALSE)
 
-  # Also return data
-  head(tidyMeans)
+# Also return data
+head(tidyMeans)
 
 
